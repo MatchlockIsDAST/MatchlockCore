@@ -1,0 +1,24 @@
+signatures:
+  XSS: #脆弱性の名前を記述
+    name: XSS #必須
+    identifier: CWE-79 #任意
+    commentary: #必須
+      JavaScriptやHTMLタグが挿入可能な箇所が存在します。\n
+      攻撃者が悪意のあるスクリプトの実行やHTMLを挿入することが可能になっているので修正が適切でしょう。
+    inspections:
+      - subname: HTML No escape
+        measures: HTMLタグがエスケープされずに出力されているか、誤ったエスケープが実施されています。
+        mustlevel: 1 #現状任意 検査に必要なレベル(実行時間と精度に影響する)
+        payload:
+          - level: 1 #現状任意
+            type: display # display,diff,timeの3つをデフォルトで判定し、全てに対して500errorなどのエラー判定も行います
+            signatures: # displayの場合は一番初めのものだけ取得する
+              - "<s>HTML Tag<s>"
+            time: #本来timeはtypetimeの際に利用される
+              min: 0
+              max: 0
+          - level: 1 #現状任意
+            type: diff
+            signatures: # diffの場合はレスポンスが全てが同じ場合に正常であると判断できるものを入力
+              - "<s>HTML Tag<s>"
+              - "%26lt%3Bs%26gt%3BHTML%20Tag%26lt%3Bs%26gt%3B"
