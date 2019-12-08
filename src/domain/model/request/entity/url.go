@@ -22,6 +22,16 @@ func CreateURL(u *url.URL) *URL {
 	}
 }
 
+//SetQuery urlのquery stringを追加する
+func (u *URL) SetQuery(key, val string) {
+	u.Query.Set(key, val)
+}
+
+//AddQuery urlのQuery を新規追加します
+func (u *URL) AddQuery(key, val string) {
+	u.Query.Add(key, val)
+}
+
 //Fetch Request内部のデータを*http.Requestに変換して取得します
 func (u *URL) Fetch() *url.URL {
 	u.URL.Path = u.Path
