@@ -16,14 +16,16 @@ type Request struct {
 
 //New *model.Requestを返します
 func New(req *http.Request) (request *Request) {
-	request.Request = req
-	request.URL = entity.CreateURL(req.URL)
-	request.Header = entity.CreateHeader(req.Header)
 	e := req.ParseForm()
 	if e != nil {
 		panic(e)
 	}
-	request.Body = entity.CreateBody(req.Header.Get("Content-Type"), req.Body, req.Form)
+	request = &Request{
+		Request: req,
+		URL:     entity.CreateURL(req.URL),
+		Header:  entity.CreateHeader(req.Header),
+		Body:    entity.CreateBody(req.Header.Get("Content-Type"), req.Body, req.Form),
+	}
 	return request
 }
 
