@@ -12,10 +12,11 @@ type Request struct {
 	URL    *entity.URL
 	Header *entity.Header
 	Body   *entity.Body
+	ID     string
 }
 
 //New *model.Requestを返します
-func New(req *http.Request) (request *Request) {
+func New(req *http.Request, id string) (request *Request) {
 	e := req.ParseForm()
 	if e != nil {
 		panic(e)
@@ -25,6 +26,7 @@ func New(req *http.Request) (request *Request) {
 		URL:     entity.CreateURL(req.URL),
 		Header:  entity.CreateHeader(req.Header),
 		Body:    entity.CreateBody(req.Header.Get("Content-Type"), req.Body, req.Form),
+		ID:      id,
 	}
 	return request
 }
