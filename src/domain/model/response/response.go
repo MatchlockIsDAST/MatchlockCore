@@ -16,15 +16,17 @@ type Response struct {
 	Header http.Header
 	Body   string
 	*request.Request
+	ID string
 }
 
 //New *model.Response を返します
-func New(resp *http.Response) (response *Response) {
+func New(resp *http.Response, id string) (response *Response) {
 	response = &Response{
 		Response: resp,
 		Header:   resp.Header,
 		Body:     tostring.Body(resp.Body),
-		Request:  request.New(resp.Request),
+		Request:  request.New(resp.Request, id),
+		ID:       id,
 	}
 	return response
 }
