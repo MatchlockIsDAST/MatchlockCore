@@ -21,6 +21,7 @@ type Response struct {
 
 //New *model.Response を返します
 func New(resp *http.Response, id string) (response *Response) {
+	defer resp.Body.Close()
 	response = &Response{
 		Response: resp,
 		Header:   resp.Header,

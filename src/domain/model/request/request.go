@@ -17,6 +17,7 @@ type Request struct {
 
 //New *model.Requestを返します
 func New(req *http.Request, id string) (request *Request) {
+	defer req.Body.Close()
 	e := req.ParseForm()
 	if e != nil {
 		panic(e)
