@@ -10,6 +10,9 @@ type AuthInfomation struct {
 
 //NewAuthInfomation 認証情報を保存する
 func NewAuthInfomation(ty, token string) *AuthInfomation {
+	if ty == "" || token == "" {
+		return nil
+	}
 	return &AuthInfomation{ty, token}
 }
 

@@ -25,12 +25,12 @@ func NewAuditInfo(server []string, replace string, points ...*AuditPoint) (info 
 }
 
 //SetAuth 認証情報を設定します
-func (audit *AuditInfo) SetAuth(authinfo *value.AuthInfomation) {
-	audit.AuthInfo = authinfo
+func (audit *AuditInfo) SetAuth(ty, token string) {
+	audit.AuthInfo = value.NewAuthInfomation(ty, token)
 }
 
-//AddPoint EndPointを追加することができます
-func (audit *AuditInfo) AddPoint(points ...*AuditPoint) {
+//AddPoints EndPointを追加することができます
+func (audit *AuditInfo) AddPoints(points ...*AuditPoint) {
 	audit.Points = append(audit.Points, points...)
 }
 
@@ -46,9 +46,10 @@ type AuditPoint struct {
 //NewAuditPoint 検査を行うエンドポイントを入力します
 func NewAuditPoint(method, path, contenttype string, header http.Header) *AuditPoint {
 	return &AuditPoint{
-		Method:      method,
-		Path:        path,
-		ContentType: contenttype,
-		Header:      header,
+		Method:          method,
+		Path:            path,
+		ContentType:     contenttype,
+		Header:          header,
+		ParamInfomation: value.NewParamInfomation(),
 	}
 }

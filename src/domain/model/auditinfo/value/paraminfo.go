@@ -14,6 +14,12 @@ func NewParamInfomation(params ...*Param) ParamInfomation {
 	return ParamInfomation{Params: paramsMap}
 }
 
+//AddParam NewParamを内部で行う
+func (pi *ParamInfomation) AddParam(name, ty string, required bool, ps ...*Param) {
+	param := NewParam(name, ty, required, ps...)
+	pi.Params[name] = param
+}
+
 //AddParams paramを生成して
 func (pi *ParamInfomation) AddParams(params ...*Param) {
 	for i := 0; i < len(params); i++ {
